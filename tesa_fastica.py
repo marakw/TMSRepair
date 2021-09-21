@@ -64,36 +64,36 @@ def compselect(epochs, options):
     muscleratio = np.zeros([options['comps']])
     fftbins = np.zeros([options['comps'], len(freq)])
 
-    # calculate frequency spectrum
-    T = 1/epochs.info['sfreq']
-    _, L, n_epoch = np.shape(epochs.tesa['S'])
+    # if needed for muscle activity detection of component inspection, calculate frequency spectrum
+    if options['muscle'] == 'on' or options['compcheck'] == 'on':
 
-    # find the next power of 2 from the length of Y
-    NFFT = 2**np.ceil(np.log2(abs(L)))
-    f = epochs.info['sfreq']/2 * np.linspace(0, 1, int(NFFT/2+1))
-    freq = np.arange(options['plotfreqx'][0], options['plotfreqx'][1]+ 0.5, 0.5)
+        T = 1/epochs.info['sfreq']
+        _, L, n_epoch = np.shape(epochs.tesa['S'])
 
-    Y2 = np.zeros([options['comps'], len(freq), n_epoch])
+        # find the next power of 2 from the length of Y
+        NFFT = 2**np.ceil(np.log2(abs(L)))
+        f = epochs.info['sfreq']/2 * np.linspace(0, 1, int(NFFT/2+1))
+        freq = np.arange(options['plotfreqx'][0], options['plotfreqx'][1]+ 0.5, 0.5)
 
-    # for each epoch get the spectral information of each component
-    Y = np.fft.rfft(zscore(epochs.tesa['S'], axis=1), n=int(NFFT), axis=1)/L
-    Yout = np.abs(Y)**2
+        Y2 = np.zeros([options['comps'], len(freq), n_epoch])
 
-    # create frequency bins of 0.5 Hz in width centered around whole frequencies 
-    for ia, a in enumerate(freq):
-        index1 = np.argmin(np.abs(f-(a-0.25)))
-        index2 = np.argmin(np.abs(f-(a+0.25)))
-        Y2[:, ia, :] = np.mean(Yout[:, index1:index2,:], 1)
+        # get the spectral information of each component of interest
+        Y = np.fft.rfft(zscore(epochs.tesa['S'], axis=1)[:options['comps'],:,:], n=int(NFFT), axis=1)/L
+        Yout = np.abs(Y)**2
 
-    fftbins = np.mean(Y2, 2)
+        # create frequency bins of 0.5 Hz in width centered around whole frequencies 
+        for ia, a in enumerate(freq):
+            index1 = np.argmin(np.abs(f-(a-0.25)))
+            index2 = np.argmin(np.abs(f-(a+0.25)))
+            Y2[:, ia, :] = np.mean(Yout[:, index1:index2,:], 1)
+
+        fftbins = np.mean(Y2, 2)
 
 
     # loop over components
     print('\nClassifying components.')
 
     for compnum in range(options['comps']):
-
-        tempCompZ = zscore(epochs.tesa['A'][:, compnum])
 
         # persistent muscle activity, polynomial fit, store the slope
         if options['muscle'] == 'on':
@@ -132,7 +132,7 @@ def compselect(epochs, options):
 
 
 
-def sortcomps(epochs):
+def sortcomps(epochs, icasig, mixing):
 
     import numpy as np
 
@@ -143,12 +143,14 @@ def sortcomps(epochs):
     # sort components in descending order based on variance
     ixsSort = np.flip(np.argsort(vars_norm))
 
-    epochs.tesa['A'] =  epochs.tesa['A'][ixsSort, :]
+    epochs.tesa['A'] =  epochs.tesa['A'][:, ixsSort]
     epochs.tesa['S'] = epochs.tesa['S'][ixsSort, :,:]
+    icasig = icasig[:,ixsSort]
+    mixing=mixing[:,ixsSort]
 
     print('\nICA weights sorted by time course variance.')
 
-    return epochs
+    return epochs, icasig, mixing
 
 
 
@@ -183,7 +185,7 @@ def run (epochs, options):
     epochs.tesa['A'] = ica.mixing_ # topographies
 
     # sort components after variance
-    epochs = sortcomps(epochs)
+    epochs, icasig, ica.mixing_ = sortcomps(epochs, icasig, ica.mixing_)
 
     # select components
     select = True
@@ -193,6 +195,7 @@ def run (epochs, options):
         badcomp = [i for i, comp in enumerate(epochs.tesa['compclass']) if int(comp) != 1]
         goodcomp = [i for i in range(rank) if i not in badcomp]
 
+        print(goodcomp)
         # correcting data by removing the detected artifactual components
         pre_mean = np.mean(data, 0)
         ica.mixing_ = ica.mixing_[:, goodcomp]
@@ -214,7 +217,7 @@ def run (epochs, options):
                 # if new settings are desired, call main function recursively 
                 #TODO check recursion
                 options['manualinput'] = 'on'
-                epochs = tesa.tesa(epochs, method='fastica', **options)
+                epochs = tesa.tesa(epochs, **options)
                 select = False
             else:
                 options['compcheck'] = 'on'

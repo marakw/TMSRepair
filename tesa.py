@@ -14,7 +14,7 @@ def tesa(epochs, **kwargs):
 
     # define defaults independent of method
     options =  {'manualinput':'on',
-                'manualcheck':'on',
+                'confirm':'on',
                 'threshfeedback': 'on',
                 'chanpicks':epochs.ch_names,
                 'compcheck':'on',

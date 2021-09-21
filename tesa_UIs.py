@@ -149,8 +149,10 @@ def ui_select(epochs, options, compnum, freq, fftbins):
     # adjust channel positions from default mne layout, original from mkeute (github)
     # plot topographical plot with mne
     layout = read_layout("EEG1005")
-    pos = (np.asanyarray([layout.pos[layout.names.index(ch)] for ch in ch_names])[:, 0:2]- 0.5) / 5
-    plot_topomap(epochs.tesa['A'][:,compnum], pos, names=ch_names, show_names=True, axes=sp2, show=False)
+
+    names = [ch for ch in ch_names if ch not in epochs.info['bads']]
+    pos = (np.asanyarray([layout.pos[layout.names.index(ch)] for ch in names])[:, 0:2]- 0.5) / 5
+    plot_topomap(epochs.tesa['A'][:,compnum].T, pos, names=names, show_names=True, axes=sp2, show=False)
     sp2.title.set_text('Topographical map')
     
     # plot spectral information

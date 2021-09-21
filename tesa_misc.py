@@ -38,7 +38,6 @@ def check_param(epochs, options):
             raise ValueError('Input for \'tmsmuscleswin\' must be in the following format: [start,end]. e.g. [11,51].')
         # TODO: add comparison to epoch length
 
-
     # check options for the fast ICA function
     if options['approach'] not in ['parallel', 'deflation']:
         raise ValueError('Input for \'approach\' must be either \'parallel\' or \'deflation\'.')
@@ -88,8 +87,6 @@ def check_param(epochs, options):
         elif options['musclefreqex'][0] < options['musclefreqin'][0] or options['musclefreqex'][1] > options['musclefreqin'][1]:
             raise ValueError('Input for \'musclefreqex\' are outside of the frequency range set by input \'musclefreqin\'.'
                                 'Please adjust.')                  
-
-
 
 
 def eval_param(options, **kwargs):
