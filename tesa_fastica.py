@@ -160,6 +160,7 @@ def run (epochs, options):
     import numpy as np
     import TESA.tesa_UIs as tesa_UIs
     import TESA.tesa as tesa
+    from copy import copy
 
     # reconcatenate epochs
     ch_idx = [i for i, chan in enumerate(epochs.ch_names) if chan in options['chanpicks']]
@@ -195,13 +196,14 @@ def run (epochs, options):
         badcomp = [i for i, comp in enumerate(epochs.tesa['compclass']) if int(comp) != 1]
         goodcomp = [i for i in range(rank) if i not in badcomp]
 
-        print(goodcomp)
         # correcting data by removing the detected artifactual components
-        pre_mean = np.mean(data, 0)
-        ica.mixing_ = ica.mixing_[:, goodcomp]
-        post = ica.inverse_transform(icasig[:, goodcomp])
+        ica_mod = copy(ica)
+        ica_mod.mixing_ = ica_mod.mixing_[:, goodcomp]
+        post = ica_mod.inverse_transform(icasig[:, goodcomp])
         post = np.reshape(post.T, [nchans, npnts, nevents])
+
         post_mean = np.mean(post, 2)
+        pre_mean = np.mean(data, 0)
 
         # check if satisfied with result
         if options['confirm'] == 'on':
