@@ -8,6 +8,7 @@ setup(
     author_email='mara.k.wolter@gmail.com',
     url='https://github.com/marakw/TMSrepair.git',
     download_url='https://github.com/marakw/TMSrepair.git',
+    license='MIT',
     packages=['tmsrepair'],
     classifiers=[
         'Development Status :: 4 - Beta',
