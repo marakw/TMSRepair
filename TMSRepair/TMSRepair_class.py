@@ -1,8 +1,5 @@
-
-
-
-import TMSRepair_misc as misc
-import TMSRepair_UIs as UIs
+import TMSRepair.TMSRepair_misc as misc
+import TMSRepair.TMSRepair_UIs as UIs
 
 import numpy as np
 import matplotlib
@@ -158,9 +155,9 @@ class TMSRepair:
 
     def replace_with_zeros(self, win:list):
         
-        # convert window to indices in epochs
+        # convert window to indices in epochs, +1 to include last timepoint
         idx1 = np.argmin(np.abs(self.epochs.times - win[0]*0.001))
-        idx2 = np.argmin(np.abs(self.epochs.times - win[1]*0.001))
+        idx2 = np.argmin(np.abs(self.epochs.times - win[1]*0.001)) +1
 
         # set values in specified window to 0
         self.epochs._data[:, :, idx1:idx2] = 0
@@ -424,7 +421,7 @@ class TMSRepair:
                 self.fastica()
 
             else:
-                self.options['compcheck'] = 'on'
+                self.set_options({'compcheck':'on'})
 
             self.compselect()
             self.inverse_transform()

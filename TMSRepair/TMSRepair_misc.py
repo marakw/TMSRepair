@@ -248,13 +248,12 @@ def cubic_interpolation(epochs, win):
 
     x = epochs.times
 
-    # convert window to indices in epochs
+    # convert window to indices in epochs; +1 because it should include the last timepoint
     idx1 = np.argmin(np.abs(x - win[0]*0.001))
-    idx2 = np.argmin(np.abs(x - win[1]*0.001))
+    idx2 = np.argmin(np.abs(x - win[1]*0.001)) +1
 
     # delete timepoints that should be interpolated
     x = np.delete(x, np.s_[idx1:idx2], 0)
-
 
     for i, epoch in enumerate(epochs):
 
