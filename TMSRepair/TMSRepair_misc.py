@@ -123,7 +123,7 @@ def eval_param(options, kwargs):
 def chan_visual_inspection(x, indexmode = 'exclude'):
 
     """
-    Github mkeute (visual_inspection).
+    from Github mkeute (visual_inspection).
     Allows you to visually inspect and exclude elements from an array.
     The array x typically contains summary statistics, e.g., the signal
     variance for each trial.
@@ -202,9 +202,9 @@ def chan_visual_inspection(x, indexmode = 'exclude'):
             plt.pause(.1)
             break
     if indexmode == 'exclude':
-    	return np.where(nanix == 1)[0]
+        return np.where(nanix == 1)[0]
     elif indexmode == 'keep':
-    	return np.where(nanix == 0)[0]
+        return np.where(nanix == 0)[0]
     else:
     	raise ValueError
 
