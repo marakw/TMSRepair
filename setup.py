@@ -12,7 +12,6 @@ setup(
     packages=['TMSRepair'],
     install_requires=[
         'numpy',
-        'pickle',
         'matplotlib',
         'mne',
         'tkinter',
