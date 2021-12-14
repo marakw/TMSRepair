@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: TMSRepair
-Version: 0.0.1
+Version: 0.0.3
 Summary: MNE extension for repairing TMS-evoked artifacts in EEG data
 Home-page: https://github.com/marakw/TMSRepair.git
 Author: Mara Wolter
