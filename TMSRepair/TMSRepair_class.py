@@ -390,8 +390,6 @@ class TMSRepair:
 
     def inverse_transform(self):
 
-        import numpy as np
-
         self.badcomp = [i for i, comp in enumerate(self.compclass) if int(comp) != 1]
         goodcomp = [i for i in range(self.rank) if i not in self.badcomp]
 
