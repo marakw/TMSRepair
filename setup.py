@@ -9,7 +9,7 @@ setup(
     url='https://github.com/marakw/TMSRepair.git',
     download_url='https://github.com/marakw/TMSRepair.git',
     license='MIT',
-    packages=['tmsrepair'],
+    packages=['TMSRepair'],
     install_requires=[
         'numpy',
         'pickle',
