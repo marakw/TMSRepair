@@ -1,1 +1,0 @@
-from TMSRepair.TMSRepair_class import TMSRepair as TMSclass

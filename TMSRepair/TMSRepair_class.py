@@ -12,7 +12,7 @@ from scipy.stats import zscore
 
 
 
-class TMSRepair:
+class TMSepochs:
     """
     Class for repairing TMS evoked artifacts in 
     mne epochs objects based on fast ICA.
