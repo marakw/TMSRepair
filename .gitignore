@@ -1,2 +1,6 @@
 # Byte-compiled 
 __pycache__/
+
+# Distribution/packaging
+dist/
+*.egg-info/

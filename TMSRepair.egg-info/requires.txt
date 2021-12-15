@@ -1,9 +1,7 @@
 numpy
 matplotlib
 mne
-tkinter
-skipy
+scipy
 sklearn
-copy
 unittest
 sys

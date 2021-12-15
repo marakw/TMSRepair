@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='TMSRepair',
-    version='0.0.5',
+    version='0.0.6',
     description='MNE extension for repairing TMS-evoked artifacts in EEG data',
     long_description='MNE extension for repairing TMS-evoked artifacts in epochs-objects with Independent Component Analysis',
     author='Mara Wolter',
@@ -14,9 +14,8 @@ setup(
         'numpy',
         'matplotlib',
         'mne',
-        'skipy',
+        'scipy',
         'sklearn',
-        'copy',
         'unittest',
         'sys'
         ],
