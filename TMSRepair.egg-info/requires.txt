@@ -1,7 +1,0 @@
-numpy
-matplotlib
-mne
-scipy
-sklearn
-unittest
-sys
