@@ -1,5 +1,6 @@
 # TMSRepair
 Code for repairing artifacts in TMS-EEG data.
+Available as PyPI package: "pip install TMSRepair"
 
 <br> 
 
