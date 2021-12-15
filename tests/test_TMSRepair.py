@@ -4,7 +4,7 @@ import numpy as np
 import sys
 sys.path.append('../TMSRepair')
 
-from TMSRepair.TMSRepair_class import TMSRepair
+import TMSRepair
 
 
 class TestTMSRepair(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestTMSRepair(unittest.TestCase):
     def setUp(self):
         with open('tests/testdata/example_epochs.p', 'rb') as file:
             epochs = pickle.load(file)
-        self.inst1 = TMSRepair(epochs, options={'manualinput':'off'})
+        self.inst1 = TMSRepair.TMSclass(epochs, options={'manualinput':'off'})
 
 
 
