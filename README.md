@@ -5,7 +5,7 @@ Available as PyPI package: "pip install TMSRepair"
 <br> 
 
 ### General
-Combining the method of Transcranial Magnetic Stimulation (TMS) with electroencephalographic (EEG) recordings leads to a severe distortion of the electrophyiological signal from sources other than the neural activity. Application of TMS induces an instant, large amplitude artifact in the EEG signal, which has to be removed prior to processing the data. Other distorting artifacts that originate directly or indirectly from stimulation are TMS-evoked muscle activity, eyeblinks, eye movement or electrode noise. These artifacts are inevitable during recording, but need to be removed prior to filtering and analyzing the data.
+Combining the method of Transcranial Magnetic Stimulation (TMS) with electroencephalographic (EEG) recordings leads to a severe distortion of the electrophysiological signal from sources other than the neural activity. Application of TMS induces an instant, large amplitude artifact in the EEG signal, which has to be removed prior to processing the data. Other distorting artifacts that originate directly or indirectly from stimulation are TMS-evoked muscle activity, eyeblinks, eye movement or electrode noise. These artifacts are inevitable during recording, but need to be removed prior to filtering and analyzing the data.
 
 For more information about TMS-EEG processing, I refer the reader to: https://nigelrogasch.gitbook.io/tesa-user-manual/an_overview_of_tms-eeg_analysis
 
